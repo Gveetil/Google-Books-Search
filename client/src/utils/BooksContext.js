@@ -9,6 +9,7 @@ const BooksContext = React.createContext({
   },
   userMessage: "",
   hasMoreBooks: false,
+  loadNextPage: () => { },
 });
 
 export default BooksContext;

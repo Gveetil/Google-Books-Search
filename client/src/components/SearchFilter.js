@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Box, TextField, CardHeader } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { RoundedButton } from "./styles";
@@ -25,33 +25,39 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-// This component generates a portfolio card based on the props passed in
-export default function SearchFilter(props) {
-    /* eslint-disable no-unused-vars */
-    const [_, dispatch] = useAppContext();
-
+// The search filter component 
+export default function SearchFilter() {
+    const [state, dispatch] = useAppContext();
     const classes = useStyles();
-    const [searchName, setSearchName] = React.useState('');
+    const [searchName, setSearchName] = useState('');
 
-    // Update state on change of book name
+    // Update local state on change of book name
     const handleChange = (event) => {
         setSearchName(event.target.value);
-    };
-
-    // Method shows a dialog box with the given message
-    const showDialog = (message) => {
-        dispatch({ type: AppContextAction.SHOW_DIALOG, show: true, message });
     };
 
     // Handles submit of search - run search if book name is entered
     const handleSubmit = (event) => {
         event.preventDefault();
         if (searchName.trim().length === 0) {
-            showDialog(incorrectDataMessage);
+            // Validation message
+            dispatch({
+                type: AppContextAction.SHOW_DIALOG,
+                show: true, message: incorrectDataMessage
+            });
             return;
         }
-        props.handleSearch(searchName.trim());
+        // update global state to execute search
+        dispatch({
+            type: AppContextAction.UPDATE_SEARCH_QUERY,
+            query: searchName.trim()
+        });
     }
+
+    // Update search criteria from previous search on load
+    useEffect(() => {
+        setSearchName(state.searchQuery);
+    }, []);
 
     return (
         <Card className={classes.root}>

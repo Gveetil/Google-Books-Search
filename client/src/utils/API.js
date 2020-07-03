@@ -22,6 +22,7 @@ export default {
       params: {
         "q": bookName,
         "startIndex": startIndex,
+        "maxResults": 10,
         "key": GOOGLE_API_KEY,
       },
     });

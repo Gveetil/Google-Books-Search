@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import Banner from "./components/Banner";
 import AppDialog from './components/AppDialog';
 import AppBackDrop from './components/AppBackDrop';
+import SuccessToast from './components/SuccessToast';
 
 // Renders the main application root component
 function App() {
@@ -21,7 +22,7 @@ function App() {
         <AppProvider>
           <CssBaseline />
           <NavBar />
-          <Container maxWidth="lg">
+          <Container maxWidth="md">
             <Banner />
             <Switch>
               <Route exact path="/Saved">
@@ -35,6 +36,7 @@ function App() {
           <AppDialog />
           <Footer />
           <AppBackDrop />
+          <SuccessToast />
         </AppProvider>
       </ThemeProvider>
     </BrowserRouter>

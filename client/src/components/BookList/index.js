@@ -48,8 +48,8 @@ function loadBooks(title, bookList) {
             </Typography>
             <Box align="center" mt={1}>
                 <Grid container justify="center">
-                    {bookList.map(book => (
-                        <Grid item xs={12} key={book._id}>
+                    {bookList.map((book, index) => (
+                        <Grid item xs={12} key={index}>
                             <BookCard book={book} />
                         </Grid>
                     ))}

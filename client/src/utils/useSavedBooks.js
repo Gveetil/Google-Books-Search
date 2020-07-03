@@ -52,6 +52,11 @@ function useSavedBooks() {
             dispatch({ type: AppContextAction.LOADING });
             const results = await API.deleteBook(deletedBook._id);
             if (results !== null) {
+                // set success toast message
+                dispatch({
+                    type: AppContextAction.SUCCESS_TOAST,
+                    toast: "Book deleted successfully!",
+                });
                 const newBooks = savedBooks.filter(book => book._id !== deletedBook._id);
                 setSavedBooks([...newBooks]);
                 if (newBooks.length <= 0)

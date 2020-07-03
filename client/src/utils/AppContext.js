@@ -5,6 +5,8 @@ const AppContextAction = {
     SHOW_DIALOG: "SHOW_DIALOG", // show / close the dialog
     LOADING: "LOADING",         // set the loading message
     LOADING_COMPLETED: "LOADING_COMPLETED",    // turn off the loading message
+    UPDATE_SEARCH_QUERY: "UPDATE_SEARCH_QUERY", // Update search query
+    SUCCESS_TOAST: "SUCCESS_TOAST",             // Set / unset the success toast message
 }
 const AppContext = React.createContext();
 const { Provider } = AppContext;
@@ -35,6 +37,18 @@ const reducer = (state, action) => {
                 loading: false,
             }
         }
+        case AppContextAction.UPDATE_SEARCH_QUERY: {
+            return {
+                ...state,
+                searchQuery: action.query,
+            }
+        }
+        case AppContextAction.SUCCESS_TOAST: {
+            return {
+                ...state,
+                successMessage: action.toast,
+            }
+        }
         default:
             return state;
     }
@@ -47,6 +61,7 @@ const AppProvider = ({ value = [], ...props }) => {
             show: false,
             message: "",
         },
+        searchQuery: "",
         loading: false,
     });
     return <Provider value={[state, dispatch]} {...props} />;
