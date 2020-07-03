@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Box, TextField, CardHeader } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Box, TextField, Container } from '@material-ui/core';
 import { RoundedButton } from "./styles";
 import { AppContextAction, useAppContext } from "../utils/AppContext";
 import SearchIcon from '@material-ui/icons/Search';
@@ -11,24 +10,9 @@ const incorrectDataMessage = (<>
     <br /> Please enter a book name.
 </>);
 
-// Styles used by this component
-const useStyles = makeStyles((theme) => ({
-    root: {
-        padding: theme.spacing(2),
-        marginBottom: theme.spacing(2),
-    },
-    header: {
-        padding: theme.spacing(1),
-    },
-    title: {
-        fontFamily: theme.typography.h6.fontFamily,
-    },
-}));
-
 // The search filter component 
 export default function SearchFilter() {
     const [state, dispatch] = useAppContext();
-    const classes = useStyles();
     const [searchName, setSearchName] = useState('');
 
     // Update local state on change of book name
@@ -60,15 +44,9 @@ export default function SearchFilter() {
     }, []);
 
     return (
-        <Card className={classes.root}>
-            <CardHeader title="Book Search"
-                classes={{
-                    root: classes.header,
-                    title: classes.title,
-                }}
-            />
+        <Container maxWidth="sm">
             <form noValidate autoComplete="off">
-                <Box display="flex" px={1} pb={2} justifyContent="flex-end">
+                <Box display="flex" px={1} py={4} justifyContent="flex-end">
                     <TextField
                         id="search-book"
                         label="Book"
@@ -91,6 +69,5 @@ export default function SearchFilter() {
                     </RoundedButton>
                 </Box>
             </form>
-        </Card >)
-        ;
+        </Container>);
 }

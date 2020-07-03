@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from '@material-ui/core';
+import { Box, Paper } from '@material-ui/core';
 import BookList from '../components/BookList';
 import useSavedBooks from "../utils/useSavedBooks";
 import BooksContext from "../utils/BooksContext";
@@ -11,7 +11,9 @@ function SavedBooks() {
     return (
         <Box mb={5}>
             <BooksContext.Provider value={savedBooks}>
-                <BookList title="Saved Books" />
+                <Paper elevation={3}>
+                    <BookList title="Saved Books" />
+                </Paper>
             </BooksContext.Provider>
         </Box>
     );

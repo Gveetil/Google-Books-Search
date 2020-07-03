@@ -9,12 +9,11 @@ export default function BookList(props) {
     return (
         <BooksContext.Consumer>
             {({ bookList, userMessage, hasMoreBooks }) => (
-                <Paper elevation={3}>
+                <div>
                     {(bookList !== null && bookList.length > 0) ?
                         loadBooks(props.title, bookList)
                         :
                         showEmptyBookList(userMessage)}
-
                     {(hasMoreBooks) ?
                         <Box py={4} align="center">
                             <MoreButton size="small" color="secondary" variant="contained" onClick={props.loadNextPage}>
@@ -23,7 +22,7 @@ export default function BookList(props) {
                         </Box>
                         : ""
                     }
-                </Paper>
+                </div>
             )}
         </BooksContext.Consumer>);
 }
@@ -31,7 +30,7 @@ export default function BookList(props) {
 // Renders a message when the book list is empty  
 function showEmptyBookList(message) {
     return (
-        <Box align="center" mt={1} p={5}>
+        <Box align="center" p={5}>
             <Typography variant="h6" component="h6">
                 {message}
             </Typography>
@@ -42,10 +41,13 @@ function showEmptyBookList(message) {
 // Render all books from the book list  
 function loadBooks(title, bookList) {
     return (
-        <Box p={2} >
-            <Typography variant="h6">
-                {title}
-            </Typography>
+        <Box p={2} align="center" >
+            {(title != "") &&
+                (<Box m={3} mb={4}>
+                    <Typography variant="h6">
+                        {title}
+                    </Typography>
+                </Box>)}
             <Box align="center" mt={1}>
                 <Grid container justify="center">
                     {bookList.map((book, index) => (

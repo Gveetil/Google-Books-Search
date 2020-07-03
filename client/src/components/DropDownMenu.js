@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // Drop down navigation menu with expand icon for smaller viewports
-export default function DropDownMenu(props) {
+export default function DropDownMenu() {
     const [opened, setOpened] = React.useState(false);
     const classes = useStyles();
     const location = useLocation();

@@ -52,7 +52,6 @@ export const AppButton = withStyles({
         margin: theme.spacing(0.5),
         marginTop: "auto",
         '& > span > svg': {
-            marginRight: theme.spacing(0.5),
             [theme.breakpoints.down('xs')]: {
                 marginRight: theme.spacing(0),
             }
@@ -85,6 +84,11 @@ export const RoundedButton = withStyles({
         marginTop: "auto",
         marginLeft: theme.spacing(2),
         borderRadius: 35,
+        '& > span > svg': {
+            [theme.breakpoints.down('xs')]: {
+                marginRight: theme.spacing(0),
+            }
+        },
         [theme.breakpoints.down('xs')]: {
             marginLeft: 0,
             padding: theme.spacing(1),

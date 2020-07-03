@@ -62,6 +62,7 @@ const AppProvider = ({ value = [], ...props }) => {
             message: "",
         },
         searchQuery: "",
+        successMessage: "",
         loading: false,
     });
     return <Provider value={[state, dispatch]} {...props} />;

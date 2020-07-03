@@ -74,7 +74,7 @@ function useBookSearch() {
                 setPageNumber(1);
                 setSearchResults([]);
                 setHasMoreBooks(false);
-                setUserMessage("Please enter a book to search for!");
+                setUserMessage("Please enter a book to search for   ....  ");
             }
         } catch (error) {
             console.log(error);

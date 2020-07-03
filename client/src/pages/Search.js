@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from '@material-ui/core';
+import { Box, Paper, Divider } from '@material-ui/core';
 import BookList from '../components/BookList';
 import SearchFilter from '../components/SearchFilter';
 import useBookSearch from "../utils/useBookSearch";
@@ -11,10 +11,13 @@ function Search() {
 
     return (
         <Box mb={5}>
-            <SearchFilter />
-            <BooksContext.Provider value={bookSearch}>
-                <BookList title="Results" loadNextPage={bookSearch.loadNextPage} />
-            </BooksContext.Provider>
+            <Paper elevation={3}>
+                <SearchFilter />
+                <Divider />
+                <BooksContext.Provider value={bookSearch}>
+                    <BookList title="" loadNextPage={bookSearch.loadNextPage} />
+                </BooksContext.Provider>
+            </Paper>
         </Box>
     );
 }

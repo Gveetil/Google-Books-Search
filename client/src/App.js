@@ -22,7 +22,7 @@ function App() {
         <AppProvider>
           <CssBaseline />
           <NavBar />
-          <Container maxWidth="md">
+          <Container maxWidth="lg">
             <Banner />
             <Switch>
               <Route exact path="/Saved">
