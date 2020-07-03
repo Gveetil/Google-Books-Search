@@ -1,10 +1,15 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const logger = require("morgan");
+const routes = require("./routes");
 
-// Set up port to work with Heroku as well
+// Set up port and database to work with Heroku as well
 var PORT = process.env.PORT || 3001;
-const app = express();
+const MONGODB = process.env.MONGODB_URI || "mongodb://localhost/googlebooks";
 
 // Configure express app server
+const app = express();
+app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -12,6 +17,12 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
 }
+
+// Add routes, both API and view
+app.use(routes);
+
+// Connect to mongo database 
+mongoose.connect(MONGODB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Start the express app server
 app.listen(PORT, function () {
