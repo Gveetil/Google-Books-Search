@@ -21,7 +21,6 @@ function useBookSearch() {
 
     // Search Query Changed
     useEffect(() => {
-        console.log(state.searchQuery, pageNumber, "query changed");
         setPageNumber(1);
         loadPageForQuery(state.searchQuery, 1);
 
@@ -46,7 +45,6 @@ function useBookSearch() {
 
     async function loadPageForQuery(query, page) {
         try {
-            console.log(query, page, "fetchSearchResults");
             if (query !== "") {
                 dispatch({ type: AppContextAction.LOADING });
                 setUserMessage("");
@@ -118,7 +116,7 @@ async function fetchGoogleBooks(query, page) {
                 book["description"] = googleBook.volumeInfo.description;
                 book["googleLink"] = googleBook.volumeInfo.infoLink;
                 book["image"] = (googleBook.volumeInfo.imageLinks) ?
-                    googleBook.volumeInfo.imageLinks.thumbnail
+                    fixImageUrl(googleBook.volumeInfo.imageLinks.thumbnail)
                     : null;
 
             }
@@ -126,6 +124,12 @@ async function fetchGoogleBooks(query, page) {
         });
     }
     return null;
+}
+
+// Google Books API Returns image links as http so need to replace them
+// This is to prevent mixed content errors on heroku
+function fixImageUrl(url) {
+    return url.replace("http://", "https://");
 }
 
 export default useBookSearch;
