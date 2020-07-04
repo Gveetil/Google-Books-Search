@@ -34,7 +34,7 @@ const theme = createMuiTheme({
             hoverText: teal.A200,
         },
         banner: {
-            main: blueGrey[100],
+            main: blueGrey[50],
         },
         buttonHover: {
             main: 'grey',
