@@ -30,8 +30,7 @@ module.exports = {
 
     } catch (error) {
       console.log(error);
-      if (error.keyValue.googleLink != null
-        && error.name === "MongoError"
+      if (error.name === "MongoError"
         && error.code === 11000) {
         // Check for validation errors
         return response.status(422).send('This book already exists in your collection!');
