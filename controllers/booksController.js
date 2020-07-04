@@ -32,7 +32,6 @@ module.exports = {
   // Delete saved book
   remove: async function (request, response) {
     try {
-      console.log(request);
       const result = await db.Book.deleteOne({ _id: request.params.id })
       return response.json(result);
 

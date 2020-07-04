@@ -41,6 +41,8 @@ export default function SearchFilter() {
     // Update search criteria from previous search on load
     useEffect(() => {
         setSearchName(state.searchQuery);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

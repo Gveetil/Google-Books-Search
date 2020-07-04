@@ -1,7 +1,7 @@
 import React from 'react';
 import BookCard from './BookCard';
 import BooksContext from "../../utils/BooksContext";
-import { Grid, Box, Typography, Paper } from "@material-ui/core";
+import { Grid, Box, Typography } from "@material-ui/core";
 import { MoreButton } from "../styles";
 
 // This component loads up books into a grid based on the current book context
@@ -42,7 +42,7 @@ function showEmptyBookList(message) {
 function loadBooks(title, bookList) {
     return (
         <Box p={2} align="center" >
-            {(title != "") &&
+            {(title !== "") &&
                 (<Box m={3} mb={4}>
                     <Typography variant="h6">
                         {title}
