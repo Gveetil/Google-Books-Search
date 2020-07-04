@@ -10,7 +10,10 @@ const bookSchema = new Schema({
   }],
   description: mongoose.Schema.Types.String,
   image: mongoose.Schema.Types.String,
-  googleLink: mongoose.Schema.Types.String,
+  googleLink: {
+    type: mongoose.Schema.Types.String,
+    unique: true,
+  },
   date: {
     type: mongoose.Schema.Types.Date,
     default: Date.now

@@ -6,6 +6,8 @@ import SaveIcon from '@material-ui/icons/Save';
 const NO_RESULTS_FOUND = "Your Search did not match any books!";
 const PAGE_INCREMENT = 10;
 
+// This custom hook handles all functionality related to search books - i.e
+// perform book searches, infinite scroll and book save 
 function useBookSearch() {
     const [state, dispatch] = useAppContext();
     const [hasMoreBooks, setHasMoreBooks] = useState(false);
@@ -13,13 +15,14 @@ function useBookSearch() {
     const [userMessage, setUserMessage] = useState(false);
     const [pageNumber, setPageNumber] = useState(1);
 
+    // Search Page supports save on books
     const supportedAction = {
         type: "Save",
         icon: <SaveIcon />,
         handler: handleSaveBook,
     }
 
-    // Search Query Changed
+    // Execute search on search query changed
     useEffect(() => {
         setPageNumber(1);
         loadPageForQuery(state.searchQuery, 1);
@@ -35,6 +38,7 @@ function useBookSearch() {
         loadNextPage,
     };
 
+    // Loads the next page of data from google books
     function loadNextPage() {
         if (hasMoreBooks) {
             const newPageNumber = pageNumber + PAGE_INCREMENT;
@@ -43,6 +47,7 @@ function useBookSearch() {
         }
     };
 
+    // Loads the google books data based on the search query and page number passed in
     async function loadPageForQuery(query, page) {
         try {
             if (query !== "") {
@@ -80,28 +85,28 @@ function useBookSearch() {
         }
     };
 
+    // Saves a book to the database
     async function handleSaveBook(book) {
         try {
             dispatch({ type: AppContextAction.LOADING });
             const results = await API.saveBook(book);
-            if (results != null) {
-                // set success toast message
-                dispatch({
-                    type: AppContextAction.SUCCESS_TOAST,
-                    toast: "Book saved successfully!",
-                });
-            } else {
+            if (results === null) {
                 dispatch({ type: AppContextAction.SHOW_DIALOG, show: true, message: "Save Failed!" });
             }
             dispatch({ type: AppContextAction.LOADING_COMPLETED });
         } catch (error) {
-            console.log(error);
-            dispatch({ type: AppContextAction.SHOW_DIALOG, show: true, message: error.message });
+            let errorMessage = error.message;
+            if (error.response && error.response.data) {
+                errorMessage = `${error.response.data}`;
+            }
+            console.error(errorMessage);
+            dispatch({ type: AppContextAction.SHOW_DIALOG, show: true, message: errorMessage });
         }
     };
 
 };
 
+// Performs actual query to fetch google books in a format compatible with this app
 async function fetchGoogleBooks(query, page) {
     const results = await API.searchBooks(query, page);
     if (results != null && results.data != null

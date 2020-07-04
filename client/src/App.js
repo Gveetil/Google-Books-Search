@@ -12,7 +12,7 @@ import Footer from './components/Footer';
 import Banner from "./components/Banner";
 import AppDialog from './components/AppDialog';
 import AppBackDrop from './components/AppBackDrop';
-import SuccessToast from './components/SuccessToast';
+import MessageToast from './components/MessageToast';
 
 // Renders the main application root component
 function App() {
@@ -36,7 +36,7 @@ function App() {
           <AppDialog />
           <Footer />
           <AppBackDrop />
-          <SuccessToast />
+          <MessageToast />
         </AppProvider>
       </ThemeProvider>
     </BrowserRouter>

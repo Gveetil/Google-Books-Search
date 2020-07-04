@@ -2,13 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 const routes = require("./routes");
+const app = express();
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
 
 // Set up port and database to work with Heroku as well
 var PORT = process.env.PORT || 3001;
 const MONGODB = process.env.MONGODB_URI || "mongodb://localhost/googlebooks";
 
 // Configure express app server
-const app = express();
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -24,7 +26,13 @@ app.use(routes);
 // Connect to mongo database 
 mongoose.connect(MONGODB, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// Start the express app server
-app.listen(PORT, function () {
+// Handle connection
+io.on('connection', function (client) {
+    console.log('Client connected...');
+});
+app.set('socketio', io);
+
+// Start the server
+server.listen(PORT, function () {
     console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });

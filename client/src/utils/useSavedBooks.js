@@ -5,17 +5,22 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 const NO_RESULTS_FOUND = "You have not saved any Books yet!";
 
+// This custom hook handles all functionality related to saved books - i.e
+// fetches all saved books from the database and deletes a book
 function useSavedBooks() {
     /* eslint-disable no-unused-vars */
     const [_, dispatch] = useAppContext();
     const [savedBooks, setSavedBooks] = useState([]);
     const [userMessage, setUserMessage] = useState(false);
+
+    // Saved Books Page supports delete on books
     const supportedAction = {
         type: "Delete",
         icon: <DeleteIcon />,
         handler: handleDeleteBook,
     }
 
+    // Fetch books when page is loaded
     useEffect(() => {
 
         async function loadSavedBooks() {
@@ -47,16 +52,13 @@ function useSavedBooks() {
         supportedAction
     };
 
+    // Deletes a book
     async function handleDeleteBook(deletedBook) {
         try {
             dispatch({ type: AppContextAction.LOADING });
-            const results = await API.deleteBook(deletedBook._id);
+            const results = await API.deleteBook(deletedBook._id, deletedBook.title);
             if (results !== null) {
-                // set success toast message
-                dispatch({
-                    type: AppContextAction.SUCCESS_TOAST,
-                    toast: "Book deleted successfully!",
-                });
+                // delete successful
                 const newBooks = savedBooks.filter(book => book._id !== deletedBook._id);
                 setSavedBooks([...newBooks]);
                 if (newBooks.length <= 0)
@@ -66,8 +68,12 @@ function useSavedBooks() {
             }
             dispatch({ type: AppContextAction.LOADING_COMPLETED });
         } catch (error) {
-            console.log(error);
-            dispatch({ type: AppContextAction.SHOW_DIALOG, show: true, message: error.message });
+            let errorMessage = error.message;
+            if (error.response && error.response.data) {
+                errorMessage = error.response.data;
+            }
+            console.error(errorMessage);
+            dispatch({ type: AppContextAction.SHOW_DIALOG, show: true, message: errorMessage });
         }
     };
 
